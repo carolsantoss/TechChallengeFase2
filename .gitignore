@@ -1,0 +1,55 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# Relatórios de diagnóstico nativos do Node.js
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# Dados em tempo de execução (PIDs e travas)
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Pastas de cobertura de testes (Jest, Istanbul, NYC)
+coverage
+*.lcov
+.nyc_output
+
+# Dependências (NUNCA envie para o Git)
+node_modules/
+jspm_packages/
+web_modules/
+
+# Caches de ferramentas de build e linters
+.npm
+.eslintcache
+.stylelintcache
+*.tsbuildinfo
+
+# Arquivos de variáveis de ambiente (Segurança: senhas e chaves de API)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.env
+
+# Arquivos gerados por empacotamento (npm pack)
+*.tgz
+
+# Configurações de IDEs e Editores de Código
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Arquivos temporários do Sistema Operacional
+.DS_Store
+Thumbs.db
