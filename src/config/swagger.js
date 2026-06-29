@@ -1,5 +1,21 @@
 const swaggerUi = require('swagger-ui-express');
 
+// 1. Criamos a lista base contendo o Localhost
+const serversList = [
+  {
+    url: 'http://localhost:3000',
+    description: 'Servidor Local',
+  },
+];
+
+// 2. Se você colocar a variável API_SERVER_URL no seu .env, ela entra na lista automaticamente
+if (process.env.API_SERVER_URL) {
+  serversList.unshift({
+    url: process.env.API_SERVER_URL,
+    description: 'Servidor de Produção / Nuvem',
+  });
+}
+
 const swaggerDocument = {
   openapi: '3.0.0',
   info: {
@@ -7,12 +23,7 @@ const swaggerDocument = {
     version: '1.0.0',
     description: 'Documentação dos endpoints de posts para professores e alunos.',
   },
-  servers: [
-    {
-      url: 'http://localhost:3000',
-      description: 'Servidor Local',
-    },
-  ],
+  servers: serversList,
   components: {
     schemas: {
       Post: {
