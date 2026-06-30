@@ -5,22 +5,26 @@ const Post = sequelize.define('Post', {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
-    primaryKey: true,
+    primaryKey: true
   },
   title: {
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(255), 
     allowNull: false,
+    validate: {
+      notEmpty: true
+    }
   },
   content: {
     type: DataTypes.TEXT,
-    allowNull: false,
+    allowNull: false
   },
   author: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
+    type: DataTypes.STRING(100),
+    allowNull: false
+  }
 }, {
-  timestamps: true, 
+  tableName: 'posts',
+  timestamps: true
 });
 
 module.exports = Post;
