@@ -1,0 +1,108 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-data
+  namespace: fiap
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-db
+  namespace: fiap
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres-db
+  template:
+    metadata:
+      labels:
+        app: postgres-db
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:15-alpine
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_USER
+              value: postgres
+            - name: POSTGRES_PASSWORD
+              value: postgres123
+            - name: POSTGRES_DB
+              value: projetofiap
+          volumeMounts:
+            - name: postgres-storage
+              mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: postgres-storage
+          persistentVolumeClaim:
+            claimName: postgres-data
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-db
+  namespace: fiap
+spec:
+  selector:
+    app: postgres-db
+  ports:
+    - port: 5432
+      targetPort: 5432
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: techchallenger
+  namespace: fiap
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: techchallenger
+  template:
+    metadata:
+      labels:
+        app: techchallenger
+    spec:
+      containers:
+        - name: techchallenger
+          image: storagedon/techchallange-2026:1.0
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+          env:
+            - name: NODE_ENV
+              value: DEV
+            - name: DB_HOST
+              value: postgres-db
+          envFrom:
+            - secretRef:
+                name: techchallenger-env
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: techchallenger
+  namespace: fiap
+  labels:
+    hostname: techchallenger.duckdns.org
+spec:
+  selector:
+    app: techchallenger
+  ports:
+    - port: 3000
+      targetPort: 3000
+
+# kubectl create secret generic -n fiap techchallenger-env --from-env-file=.env

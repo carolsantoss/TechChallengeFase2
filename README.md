@@ -41,3 +41,22 @@ Graças à containerização com Docker, você não precisa instalar o Node.js o
 ```bash
    git clone https://github.com/carolsantoss/TechChallengeFase2.git
    cd TechChallengeFase2
+
+### 🚀 Como Rodar o Projeto
+
+# 1. Subir o projeto inteiro (API + Banco de Dados)
+docker compose up -d
+
+# 2. Ver se deu tudo certo (Logs do sistema)
+docker compose logs -f
+
+# 3. Atualizar o sistema após mudar o código
+docker compose up --build -d
+
+# 4. Parar e desligar tudo
+docker compose down
+
+---
+
+### 🔗 Link de Acesso
+* Documentação Swagger: http://localhost:3000/docs
