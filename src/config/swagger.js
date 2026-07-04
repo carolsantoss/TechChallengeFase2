@@ -22,6 +22,13 @@ const swaggerDocument = {
     description: 'Documentação dos endpoints de posts para professores e alunos.',
   },
   servers: serversList,
+
+  security: [
+    {
+      access_token: []
+    }
+  ],
+  
   components: {
     schemas: {
       Post: {
@@ -37,6 +44,16 @@ const swaggerDocument = {
         },
       },
     },
+
+    //////////////acess_token
+    securitySchemes: {
+        access_token: {
+          type: 'apiKey',
+          in: 'header',
+          name: 'access_token'
+        }
+      }
+
   },
   paths: {
     '/posts': {
@@ -124,6 +141,25 @@ const swaggerDocument = {
         },
       },
     },
+
+    '/posts/search': {
+      get: {
+        summary: 'Busca posts por palavra-chave',
+        parameters: [
+          {
+            in: 'query',
+            name: 'term',
+            required: true,
+            schema: { type: 'string' }
+          }
+        ],
+        responses: {
+          200: {description: 'OK'},
+        }
+      }
+    }
+
+
   },
 };
 

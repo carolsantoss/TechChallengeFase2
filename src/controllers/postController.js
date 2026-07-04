@@ -51,6 +51,25 @@ class PostController {
       return res.status(404).json({ error: error.message });
     }
   }
+
+  
+  //search
+  search = async (req, res) => {
+  try {
+    const { term } = req.query;
+
+    if (!term) {
+      return res.status(400).json({ error: 'Palavra-chave é obrigatório' });
+    }
+
+    const posts = await postService.searchPosts(term);
+    return res.json(posts);
+
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+}
+
 }
 
 module.exports = new PostController();
