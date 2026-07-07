@@ -4,7 +4,8 @@
   "description": "## Sobre o Projeto Este projeto foi desenvolvido como parte do **Tech Challenge** do curso. O objetivo principal é resolver um problema real enfrentado por professores e professoras da rede pública de educação: a falta de uma plataforma centralizada, prática e tecnológica para postar aulas e transmitir conhecimento aos alunos.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Sem testes configurados por enquanto.\"",
+     "test": "jest --forceExit --detectOpenHandles",
+     "test:coverage": "jest --coverage",
     "dev": "nodemon index.js"
   },
   "keywords": [],
@@ -20,6 +21,8 @@
     "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
-    "nodemon": "^3.1.14"
+    "jest": "^30.4.2",
+    "nodemon": "^3.1.14",
+    "supertest": "^7.2.2"
   }
 }
