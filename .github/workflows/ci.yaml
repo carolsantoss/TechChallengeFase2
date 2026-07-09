@@ -31,6 +31,8 @@ jobs:
       # 4. Stage: Test
       - name: Run tests
         run: npm test --if-present
+        env:
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
 
       # 5. Stage: New Version & Commit tag github
       - name: Bump version and push tag
