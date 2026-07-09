@@ -1,9 +1,6 @@
 
 const postRepository = require('../src/repositories/postRepository');
 const Post = require('../src/models/postModel');
-require('dotenv').config({ path: '.env' });
-const request = require('supertest');
-const app = require('../src/app');
 
 jest.mock('../src/models/postModel');
 

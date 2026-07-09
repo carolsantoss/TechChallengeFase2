@@ -1,81 +1,121 @@
-
 require('dotenv').config({ path: '.env' });
 const request = require('supertest');
+const jwt = require('jsonwebtoken');
 const app = require('../src/app');
+const postService = require('../src/services/postService');
+const userRepository = require('../src/repositories/userRepository');
 
-const API = 'http://localhost:3000';
+jest.mock('../src/services/postService');
+jest.mock('../src/repositories/userRepository');
 
-let createdId;
+const JWT_SECRET = process.env.JWT_SECRET || 'test_secret';
+const token = jwt.sign({ id: 1, email: 'jest@teste.com' }, JWT_SECRET);
 
-//integração
-describe('Teste do metodos - Posts ', () => {
+describe('Teste dos métodos - Posts (integração - dados mockados)', () => {
+
+  beforeEach(() => {
+    // usuário que o roleCheck vai "encontrar" no banco (mockado)
+    userRepository.findById.mockResolvedValue({
+      id: 1,
+      email: 'jest@teste.com',
+      role: 'docente'
+    });
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
 
   test('POST /posts - cria post', async () => {
-    const res = await request(API)
+    postService.createPost.mockResolvedValue({
+      id: 1,
+      title: 'Teste Jest',
+      content: 'Usando Jest para teste',
+      author: 'Jest'
+    });
+
+    const res = await request(app)
       .post('/posts')
-      .set('access_token', 'PROFFIAP')
+      .set('Authorization', `Bearer ${token}`)
       .send({
-        title: "Teste Jest",
-        content: "Usando Jest para teste",
-        author: "Jest"
+        title: 'Teste Jest',
+        content: 'Usando Jest para teste',
+        author: 'Jest'
       });
 
     expect(res.statusCode).toBe(201);
     expect(res.body).toHaveProperty('id');
-
-    createdId = res.body.id;
   });
 
+  test('POST /posts - sem token - 401', async () => {
+    const res = await request(app)
+      .post('/posts')
+      .send({ title: 'Sem auth' });
 
-  test('GET /posts - retorna post', async () => {
-    const res = await request(API).get('/posts');
+    expect(res.statusCode).toBe(401);
+    expect(postService.createPost).not.toHaveBeenCalled();
+  });
+
+  test('GET /posts - retorna lista de posts', async () => {
+    postService.getAllPosts.mockResolvedValue([{ id: 1, title: 'Post 1' }]);
+
+    const res = await request(app).get('/posts');
 
     expect(res.statusCode).toBe(200);
     expect(Array.isArray(res.body)).toBe(true);
   });
 
- test('GET /posts - Rota Não encontrada', async () => {
-    const res = await request(API).get('/post');
+  test('GET /post (rota inexistente) - 404', async () => {
+    const res = await request(app).get('/post');
 
     expect(res.statusCode).toBe(404);
   });
 
- 
   test('GET /posts/:id - retorna post pelo ID', async () => {
-    const res = await request(API).get(`/posts/${createdId}`);
+    postService.getPostById.mockResolvedValue({ id: 1, title: 'Post 1' });
+
+    const res = await request(app).get('/posts/1');
 
     expect(res.statusCode).toBe(200);
-    expect(res.body.id).toBe(createdId);
+    expect(res.body.id).toBe(1);
   });
 
+  test('GET /posts/:id inexistente - 404', async () => {
+    postService.getPostById.mockRejectedValue(new Error('not found'));
+
+    const res = await request(app).get('/posts/0');
+
+    expect(res.statusCode).toBe(404);
+  });
 
   test('PUT /posts/:id - atualiza post', async () => {
-    const res = await request(API)
-      .put(`/posts/${createdId}`)
-      .set('access_token', 'PROFFIAP')
+    postService.updatePost.mockResolvedValue({
+      id: 1,
+      title: 'Atualizado',
+      content: 'Atualizado',
+      author: 'Jest'
+    });
+
+    const res = await request(app)
+      .put('/posts/1')
+      .set('Authorization', `Bearer ${token}`)
       .send({
-        title: "Atualizado",
-        content: "Atualizado",
-        author: "Jest"
+        title: 'Atualizado',
+        content: 'Atualizado',
+        author: 'Jest'
       });
 
     expect(res.statusCode).toBe(200);
   });
 
+  test('DELETE /posts/:id - deleta post', async () => {
+    postService.deletePost.mockResolvedValue();
 
-test('DELETE /posts/:id - deleta post', async () => {
-  const res = await request(API)
-    .delete(`/posts/${createdId}`)
-    .set('access_token', 'PROFFIAP');
+    const res = await request(app)
+      .delete('/posts/1')
+      .set('Authorization', `Bearer ${token}`);
 
-  expect(res.statusCode).toBe(200);
-});
-
-
-  test('GET /posts/:id inexistente - retorna 404', async () => {
-  const res = await request(API).get('/posts/0');
-
-  expect(res.statusCode).toBe(404);
-});
+    expect(res.statusCode).toBe(200);
+  });
 
 });

@@ -3,11 +3,15 @@ const Post = require('../models/postModel');
 
 class PostRepository {
   async findAll() {
-    return await Post.findAll();
+    return await Post.findAll({
+      include: [{ association: 'autor', attributes: ['nome'] }],
+    });
   }
 
   async findById(id) {
-    return await Post.findByPk(id);
+    return await Post.findByPk(id, {
+      include: [{ association: 'autor', attributes: ['nome'] }],
+    });
   }
 
   async create(postData) {
@@ -36,7 +40,8 @@ class PostRepository {
           { title: { [Op.iLike]: `%${term}%` } },   
           { content: { [Op.iLike]: `%${term}%` } }
         ]
-      }
+      },
+      include: [{ association: 'autor', attributes: ['id', 'nome', 'email', 'role'] }],
     });
   }
 }

@@ -1,22 +1,41 @@
-function authCheck(req, res, next) {
-  console.log("HEADERS:", req.headers);
+const jwt = require('jsonwebtoken');
 
-  const token =
-    req.headers['access_token'] ||
-    req.headers['access-token'] ||
-    req.headers['authorization'];
+const authCheck = (req, res, next) => {
+  try {
+    const authHeader = req.headers.authorization;
 
-  console.log("TOKEN:", token);
+    if (!authHeader) {
+      return res.status(401).json({
+        message: 'Token não informado.'
+      });
+    }
 
-  if (!token) {
-    return res.status(401).json({ error: "Acesso negado!" });
+
+    const token = authHeader.split(' ')[1];
+
+    if (!token) {
+      return res.status(401).json({
+        message: 'Token inválido.'
+      });
+    }
+
+
+    const decoded = jwt.verify(
+      token,
+      process.env.JWT_SECRET
+    );
+
+
+    req.user = decoded;
+
+    next();
+
+  } catch (error) {
+    return res.status(401).json({
+      message: 'Token inválido ou expirado.'
+    });
   }
+};
 
-  if (token !== "PROFFIAP") {
-    return res.status(401).json({ error: "Token incorreto" });
-  }
-
-  next();
-}
 
 module.exports = authCheck;
