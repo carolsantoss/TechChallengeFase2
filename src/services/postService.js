@@ -13,12 +13,17 @@ class PostService {
     return post;
   }
 
-  async createPost(postData) {
-    if (!postData.title || !postData.content || !postData.author) {
-      throw new Error('Título, conteúdo e autor são campos obrigatórios.');
-    }
-    return await postRepository.create(postData);
+  async createPost(postData, userId) {
+  if (!postData.title || !postData.content ) {
+    throw new Error('Título e conteúdo são campos obrigatórios.');
   }
+
+  return await postRepository.create({
+    title: postData.title,
+    content: postData.content,
+    userId: userId,
+  });
+}
 
   async updatePost(id, updatedData) {
     await this.getPostById(id); // Garante que existe

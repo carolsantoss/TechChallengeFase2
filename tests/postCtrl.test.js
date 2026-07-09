@@ -3,7 +3,7 @@ const postService = require('../src/services/postService');
 
 jest.mock('../src/services/postService');
 
-describe('PostController - unit', () => {
+describe('PostController - unitario', () => {
   let req;
   let res;
 
@@ -11,7 +11,8 @@ describe('PostController - unit', () => {
     req = {
       body: {},
       params: {},
-      query: {}
+      query: {},
+      user: { id: 1 } ///// simula usuário autenticado 
     };
 
     res = {
@@ -28,8 +29,20 @@ describe('PostController - unit', () => {
 
     await postController.create(req, res);
 
+    expect(postService.createPost).toHaveBeenCalledWith(req.body, req.user.id);
     expect(res.status).toHaveBeenCalledWith(201);
     expect(res.json).toHaveBeenCalledWith({ id: 1 });
+  });
+
+  test('Criar post - erro do service - 400', async () => {
+    req.body = { title: 'teste' };
+
+    postService.createPost.mockRejectedValue(new Error('dados inválidos'));
+
+    await postController.create(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({ error: 'dados inválidos' });
   });
 
 
