@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testExecutions version="1">
+  <file path="/home/don/fiap/TechChallengeFase2/tests/posts.test.js">
+    <testCase name="Teste dos métodos - Posts (integração - dados mockados) POST /posts - cria post" duration="98"/>
+    <testCase name="Teste dos métodos - Posts (integração - dados mockados) POST /posts - sem token - 401" duration="8"/>
+    <testCase name="Teste dos métodos - Posts (integração - dados mockados) GET /posts - retorna lista de posts" duration="8"/>
+    <testCase name="Teste dos métodos - Posts (integração - dados mockados) GET /post (rota inexistente) - 404" duration="10"/>
+    <testCase name="Teste dos métodos - Posts (integração - dados mockados) GET /posts/:id - retorna post pelo ID" duration="7"/>
+    <testCase name="Teste dos métodos - Posts (integração - dados mockados) GET /posts/:id inexistente - 404" duration="8"/>
+    <testCase name="Teste dos métodos - Posts (integração - dados mockados) PUT /posts/:id - atualiza post" duration="12"/>
+    <testCase name="Teste dos métodos - Posts (integração - dados mockados) DELETE /posts/:id - deleta post" duration="7"/>
+  </file>
+  <file path="/home/don/fiap/TechChallengeFase2/tests/auth.test.js">
+    <testCase name="Sem token - 401" duration="4"/>
+    <testCase name="Token errado - 401" duration="1"/>
+    <testCase name="Token correto - next()" duration="3"/>
+  </file>
+  <file path="/home/don/fiap/TechChallengeFase2/tests/postRepository.test.js">
+    <testCase name="repository - buscar por id" duration="2"/>
+    <testCase name="repository - busca por id inexistente" duration="1"/>
+    <testCase name="repository - exclui post existente" duration="1"/>
+    <testCase name="repository - atualiza post existente" duration="2"/>
+    <testCase name="delete - post inexistente" duration="1"/>
+    <testCase name="atualiza - post inexistente" duration="0"/>
+    <testCase name="cria post" duration="1"/>
+    <testCase name="lista todos" duration="1"/>
+    <testCase name="procurar posts" duration="1"/>
+  </file>
+  <file path="/home/don/fiap/TechChallengeFase2/tests/userService.test.js">
+    <testCase name="UserService - Testes Unitários getAllUsers - deve retornar todos os usuários" duration="3"/>
+    <testCase name="UserService - Testes Unitários getUserById - deve retornar um usuario" duration="1"/>
+    <testCase name="UserService - Testes Unitários getUserById - usuário não encontrado" duration="7"/>
+    <testCase name="UserService - Testes Unitários createUser - deve criar um usuario" duration="54"/>
+    <testCase name="UserService - Testes Unitários updateUser - atualiza um usuario" duration="1"/>
+    <testCase name="UserService - Testes Unitários updateUser - usuario não existe" duration="1"/>
+    <testCase name="UserService - Testes Unitários deleteUser - exclui usuario" duration="1"/>
+    <testCase name="UserService - Testes Unitários deleteUser - erro ao excluir usuario" duration="1"/>
+  </file>
+  <file path="/home/don/fiap/TechChallengeFase2/tests/userRepo.test.js">
+    <testCase name="repository - buscar por id" duration="2"/>
+    <testCase name="repository - busca por id inexistente" duration="1"/>
+    <testCase name="repository - exclui usuari" duration="1"/>
+    <testCase name="repository - atualiza usuario" duration="1"/>
+    <testCase name="delete - usuario inexistente" duration="0"/>
+    <testCase name="cria usuario" duration="0"/>
+    <testCase name="lista todos" duration="2"/>
+  </file>
+  <file path="/home/don/fiap/TechChallengeFase2/tests/postService.test.js">
+    <testCase name="PostService - Testes Unitários getAllPosts - deve retornar todos os posts" duration="3"/>
+    <testCase name="PostService - Testes Unitários getPostById - deve retornar um post" duration="2"/>
+    <testCase name="PostService - Testes Unitários getPostById - deve lançar erro quando o post não existir" duration="6"/>
+    <testCase name="PostService - Testes Unitários createPost - deve criar um post" duration="1"/>
+    <testCase name="PostService - Testes Unitários createPost - deve lançar erro sem título" duration="2"/>
+    <testCase name="PostService - Testes Unitários createPost - deve lançar erro sem conteúdo" duration="1"/>
+    <testCase name="PostService - Testes Unitários updatePost - deve atualizar um post" duration="1"/>
+    <testCase name="PostService - Testes Unitários updatePost - deve lançar erro se o post não existir" duration="2"/>
+    <testCase name="PostService - Testes Unitários deletePost - deve remover um post" duration="5"/>
+    <testCase name="PostService - Testes Unitários deletePost - deve lançar erro se o post não existir" duration="1"/>
+    <testCase name="PostService - Testes Unitários searchPosts - deve buscar por termo" duration="1"/>
+    <testCase name="PostService - Testes Unitários searchPosts - sem termo deve retornar todos os posts" duration="1"/>
+  </file>
+  <file path="/home/don/fiap/TechChallengeFase2/tests/postCtrl.test.js">
+    <testCase name="PostController - unitario Criar post" duration="3"/>
+    <testCase name="PostController - unitario Criar post - erro do service - 400" duration="1"/>
+    <testCase name="PostController - unitario GET /:id sucesso" duration="1"/>
+    <testCase name="PostController - unitario GET /:id inexistente - 404" duration="6"/>
+    <testCase name="PostController - unitario UPDATE sucesso" duration="1"/>
+    <testCase name="PostController - unitario UPDATE inexistente - 404" duration="1"/>
+    <testCase name="PostController - unitario DELETE sucesso" duration="1"/>
+    <testCase name="PostController - unitario DELETE inexistente - 404" duration="1"/>
+    <testCase name="PostController - unitario SEARCH sem term - 400" duration="1"/>
+    <testCase name="PostController - unitario SEARCH com term" duration="1"/>
+  </file>
+  <file path="/home/don/fiap/TechChallengeFase2/tests/authService.test.js">
+    <testCase name="AuthService login login com sucesso" duration="3"/>
+    <testCase name="AuthService login senha errada" duration="5"/>
+  </file>
+  <file path="/home/don/fiap/TechChallengeFase2/tests/userctrl.test.js">
+    <testCase name="UserController - unitario Criar user" duration="3"/>
+    <testCase name="UserController - unitario GET /:id sucesso" duration="1"/>
+    <testCase name="UserController - unitario GET /:id inexistente - 404" duration="1"/>
+    <testCase name="UserController - unitario UPDATE sucesso" duration="1"/>
+    <testCase name="UserController - unitario UPDATE inexistente - 404" duration="1"/>
+    <testCase name="UserController - unitario DELETE sucesso" duration="1"/>
+  </file>
+  <file path="/home/don/fiap/TechChallengeFase2/tests/authCtro.test.js">
+    <testCase name="login com sucesso" duration="3"/>
+  </file>
+</testExecutions>

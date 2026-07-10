@@ -77,7 +77,7 @@ spec:
     spec:
       containers:
         - name: techchallenger
-          image: storagedon/techchallange-2026:1.0
+          image: storagedon/techchallange-2026:back-v0.0.4
           imagePullPolicy: Always
           ports:
             - containerPort: 3000
