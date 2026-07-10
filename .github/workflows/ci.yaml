@@ -62,5 +62,4 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/techchallange-2026:back-latest
             ${{ secrets.DOCKERHUB_USERNAME }}/techchallange-2026:back-${{ steps.semver_tag.outputs.new_tag }}
