@@ -21,17 +21,23 @@ class UserService {
 
     const senhaHash = await bcrypt.hash(userData.senha, 10);
 
-    return await userRepository.create({
+    const usuario = await userRepository.create({
       nome: userData.nome,
       email: userData.email,
       senha: senhaHash,
       role: userData.role || 'aluno'
     });
+
+    const { senha, ...usuarioSemSenha } = usuario.toJSON ? usuario.toJSON() : usuario;
+    return usuarioSemSenha;
   }
 
   async updateUser(id, updatedData) {
     await this.getUserById(id); // Garante que existe
-    return await userRepository.update(id, updatedData);
+
+    const usuario = await userRepository.update(id, updatedData);
+    const { senha, ...usuarioSemSenha } = usuario.toJSON ? usuario.toJSON() : usuario;
+    return usuarioSemSenha;
   }
 
   async deleteUser(id) {

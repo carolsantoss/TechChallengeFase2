@@ -3,11 +3,11 @@ const Usuario = require('../models/userModel');
 class UserRepository {
 
   async findAll() {
-    return await Usuario.findAll();
+    return await Usuario.findAll({ attributes: { exclude: ['senha'] } });
   }
 
   async findById(id) {
-    return await Usuario.findByPk(id);
+    return await Usuario.findByPk(id, { attributes: { exclude: ['senha'] } });
   }
 
 
