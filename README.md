@@ -126,6 +126,7 @@ DB_NAME=blog
 DB_USER=postgres
 DB_PASSWORD=senha
 PORT=3000
+JWT_SECRET=a_chave_secreta_
 ```
 
 ---
@@ -199,7 +200,7 @@ A documentação da API é gerada com **Swagger**.
 Após iniciar a aplicação, acesse:
 
 ```
-http://localhost:3000/docs
+[http://localhost:3000/docs](https://techchallenger.duckdns.org/docs/)
 ```
 
 Nela é possível visualizar todos os endpoints e realizar testes diretamente pelo navegador.
