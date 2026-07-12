@@ -200,7 +200,7 @@ A documentação da API é gerada com **Swagger**.
 Após iniciar a aplicação, acesse:
 
 ```
-[http://localhost:3000/docs](https://techchallenger.duckdns.org/docs/)
+https://techchallenger.duckdns.org/docs/
 ```
 
 Nela é possível visualizar todos os endpoints e realizar testes diretamente pelo navegador.
