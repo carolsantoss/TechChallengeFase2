@@ -13,9 +13,9 @@ router.get('/posts/:id', postController.getById);
 
 
 ////PROF
-router.post('/posts',authCheck,roleCheck('docente'), postController.create);
-router.put('/posts/:id',authCheck, roleCheck('docente'),postController.update);
-router.delete('/posts/:id', authCheck,roleCheck('docente'),postController.delete);
+router.post('/posts',authCheck,roleCheck('docente', 'admin'), postController.create);
+router.put('/posts/:id',authCheck, roleCheck('docente', 'admin'),postController.update);
+router.delete('/posts/:id', authCheck,roleCheck('docente','admin'),postController.delete);
 
 
 module.exports = router;

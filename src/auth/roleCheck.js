@@ -22,7 +22,7 @@ const roleCheck = (...perfilPermitido) => {
 
       if (!perfilPermitido.includes(usuario.role)) {
         return res.status(403).json({
-          message: 'Apenas docente podemos realizar essa ação!',
+          message: 'Tipo de perfil não permitido!',
         });
       }
 
